@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Room 2D</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Load Phaser 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
+    <!-- Load Socket.io client -->
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Phaser Canvas will be injected here -->
+        
+        <!-- Chat UI Overlay -->
+        <div id="chat-container">
+            <div id="chat-messages"></div>
+            <form id="chat-form">
+                <input id="chat-input" autocomplete="off" placeholder="Press Enter to chat..." />
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Client Logic -->
+    <script src="client.js"></script>
+</body>
+</html>
