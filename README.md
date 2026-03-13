@@ -1,0 +1,1 @@
+a intenção é criar uma sala interativa que permita multiplos acessos soimultaneos, a partir dai começaremos a adicionar chat, mecanicas e o objetivo final é uma sala com algumas regras de rpg. testes de pericias e ate combate com as regras do d&d. Mas primeiro tenho que fazer funcionar
