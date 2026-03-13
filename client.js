@@ -28,6 +28,25 @@ let cursors;
 let wasd;
 let spaceKey;
 let platforms;
+let debugGraphics;
+
+// Set to true to see where the platforms are so you can adjust their positions
+const DEBUG_PLATFORMS = true; // <- mude para false quando estiver satisfeito com a posição
+
+// ─── PLATFORM DEFINITIONS ──────────────────────────────────────────────────────
+// cx = centro X, cy = centro Y, w = largura, h = altura (tudo em % da tela: 0.0 a 1.0)
+// Ajuste os valores de cy para subir/descer e cx/w para mover/redimensionar
+const PLATFORM_DEFS = [
+    // Chão principal (alinhado com a grama verde do fundo)
+    { cx: 0.50, cy: 0.80, w: 1.00, h: 0.04 },
+    // Pedra grande do centro-esquerda
+    { cx: 0.38, cy: 0.75, w: 0.10, h: 0.03 },
+    // Pedra grande do centro
+    { cx: 0.52, cy: 0.74, w: 0.08, h: 0.03 },
+    // Pedra da direita
+    { cx: 0.80, cy: 0.76, w: 0.09, h: 0.03 },
+];
+// ──────────────────────────────────────────────────────────────────────────────
 
 // Jump mechanics variables
 let isJumping = false;
@@ -58,15 +77,28 @@ function create() {
     bg.displayWidth = window.innerWidth;
     bg.displayHeight = window.innerHeight;
 
-    // Create an invisible ground platform across the bottom based on the image's dirt level
+    // Build all platforms from the PLATFORM_DEFS list above
     platforms = this.physics.add.staticGroup();
-    
-    // The dirt floor is approximately at the bottom 10-15% of the screen. 
-    // We create a wide invisible rectangle for the players to stand on.
-    let groundHeight = 50; 
-    let groundY = window.innerHeight - groundHeight / 2;
-    let ground = this.add.rectangle(window.innerWidth / 2, groundY, window.innerWidth * 2, groundHeight, 0x00ff00, 0); // alpha 0 for invisible
-    platforms.add(ground);
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+
+    // Debug graphics layer (shows platform outlines when DEBUG_PLATFORMS = true)
+    debugGraphics = this.add.graphics();
+
+    PLATFORM_DEFS.forEach(def => {
+        const px = def.cx * W;
+        const py = def.cy * H;
+        const pw = def.w * W;
+        const ph = def.h * H;
+
+        const rect = this.add.rectangle(px, py, pw, ph, 0x4444ff, DEBUG_PLATFORMS ? 0.35 : 0);
+        platforms.add(rect);
+
+        if (DEBUG_PLATFORMS) {
+            debugGraphics.lineStyle(2, 0x00ffff, 1);
+            debugGraphics.strokeRect(px - pw / 2, py - ph / 2, pw, ph);
+        }
+    });
 
     // A group to hold all other players' sprites
     otherPlayers = this.physics.add.group();
